@@ -11,6 +11,26 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+task testProject {
+    dependsOn(['startServer','runTests','shutdownServer'])
+}
+
+task startServer {
+    dependsOn ':JavaBackend:appengineRun'
+    evaluationDependsOn(":JavaBackend")
+    project(':JavaBackend').appengine.daemon = true
+}
+
+task runTests {
+    dependsOn ':app:connectedAndroidTest'
+    mustRunAfter "startServer"
+}
+
+task shutdownServer {
+    dependsOn ':JavaBackend:appengineStop'
+    mustRunAfter "runTests"
+
+}
 
 allprojects {
     repositories {
