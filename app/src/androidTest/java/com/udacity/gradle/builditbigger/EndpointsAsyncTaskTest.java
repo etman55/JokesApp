@@ -7,12 +7,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static junit.framework.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Etman on 7/10/2017.
  */
 public class EndpointsAsyncTaskTest implements JokeHandler {
-    private String joke = "";
+    private String joke = null;
 
     @Test
     public void doInBackground() throws Exception {
@@ -27,6 +28,8 @@ public class EndpointsAsyncTaskTest implements JokeHandler {
         } catch (TimeoutException e) {
             fail("Timed out Exception: " + e);
         }
+        assertTrue("Error: we found this Joke = " + joke, joke != null);
+
     }
 
     @Override
